@@ -2,10 +2,15 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainWindow implements ActionListener {
 
-    DataQuestions dataQuestions = new DataQuestions();
+    private List<Question> listQuestions = new DataQuestions().getListWords();
+    private int numberWord = 0;
+    private int countWords = listQuestions.size();
 
     JFrame frame = new JFrame();
     JTextField textField = new JTextField();
@@ -26,50 +31,50 @@ public class MainWindow implements ActionListener {
         frame.setLayout(null);
         frame.setResizable(false);
 
-        textField.setBounds(0,0,565,50);
+        textField.setBounds(0,0,565,75);
         textField.setBackground(new Color(57, 72, 120));
         textField.setForeground(new Color(255, 255, 255, 255));
         textField.setFont(new Font("Arial",Font.BOLD,30));
         textField.setBorder(BorderFactory.createBevelBorder(1));
         textField.setHorizontalAlignment(JTextField.CENTER);
         textField.setEditable(false);
-        textField.setText(dataQuestions.getListWords().get(1).getEngWord());
+        textField.setText(listQuestions.get(numberWord).getEngWord());
 
         buttonA.setBounds(50,100,200,200);
         buttonA.setFont(new Font("Arial",Font.BOLD,35));
         buttonA.setFocusable(false);
         buttonA.addActionListener(this);
-        buttonA.setText("A");
+//        buttonA.setText("A");
 
         buttonB.setBounds(300,100,200,200);
         buttonB.setFont(new Font("Arial",Font.BOLD,35));
         buttonB.setFocusable(false);
         buttonB.addActionListener(this);
-        buttonB.setText("B");
+//        buttonB.setText("B");
 
         buttonC.setBounds(50,350,200,200);
         buttonC.setFont(new Font("Arial",Font.BOLD,35));
         buttonC.setFocusable(false);
         buttonC.addActionListener(this);
-        buttonC.setText("C");
+//        buttonC.setText("C");
 
         buttonD.setBounds(300,350,200,200);
         buttonD.setFont(new Font("Arial",Font.BOLD,35));
         buttonD.setFocusable(false);
         buttonD.addActionListener(this);
-        buttonD.setText("D");
+//        buttonD.setText("D");
 
         buttonE.setBounds(50,600,200,200);
         buttonE.setFont(new Font("Arial",Font.BOLD,35));
         buttonE.setFocusable(false);
         buttonE.addActionListener(this);
-        buttonE.setText("E");
+//        buttonE.setText("E");
 
         buttonF.setBounds(300,600,200,200);
         buttonF.setFont(new Font("Arial",Font.BOLD,35));
         buttonF.setFocusable(false);
         buttonF.addActionListener(this);
-        buttonF.setText("F");
+//        buttonF.setText("F");
 
         buttonPrev.setBounds(100,850,150,50);
         buttonPrev.setFont(new Font("Arial",Font.BOLD,35));
@@ -91,6 +96,8 @@ public class MainWindow implements ActionListener {
         frame.add((buttonPrev));
         frame.add((buttonNext));
         frame.setVisible(true);
+
+        showWord();
     }
 
     @Override
@@ -113,6 +120,48 @@ public class MainWindow implements ActionListener {
         if(e.getSource()==buttonF) {
             System.out.println("F");
         }
+        if(e.getSource() == buttonNext) {
+            numberWord++;
+            if (numberWord > countWords - 1) {
+                numberWord = 0;
+            }
+            showWord();
+
+        }
+        if(e.getSource() == buttonPrev) {
+            numberWord--;
+            if (numberWord < 0) {
+                numberWord = countWords - 1;
+            }
+            showWord();
+
+        }
+    }
+
+    private void showWord() {
+        Question word = listQuestions.get(numberWord);
+        textField.setText(word.getEngWord());
+        List<String> listWords = new ArrayList<>();
+        listWords.add(word.getRusWord());
+
+        for (int i = 1; i < 6; i++) {
+            int num = (int) Math.floor(Math.random() * countWords);
+            while (listWords.contains(listQuestions.get(num).getRusWord())) {
+                num = (int) Math.floor(Math.random() * countWords);
+            }
+
+            if (!listWords.contains(listQuestions.get(num).getRusWord())) {
+                listWords.add(listQuestions.get(num).getRusWord());
+            }
+
+        }
+
+        buttonA.setText(listWords.get(0));
+        buttonB.setText(listWords.get(1));
+        buttonC.setText(listWords.get(2));
+        buttonD.setText(listWords.get(3));
+        buttonE.setText(listWords.get(4));
+        buttonF.setText(listWords.get(5));
     }
 
 }
