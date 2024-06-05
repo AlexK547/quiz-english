@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class MainWindow implements ActionListener {
@@ -43,38 +43,40 @@ public class MainWindow implements ActionListener {
         buttonA.setBounds(50,100,200,200);
         buttonA.setFont(new Font("Arial",Font.BOLD,35));
         buttonA.setFocusable(false);
+        buttonA.setBackground(new Color(223, 233, 242, 255));
         buttonA.addActionListener(this);
-//        buttonA.setText("A");
 
         buttonB.setBounds(300,100,200,200);
         buttonB.setFont(new Font("Arial",Font.BOLD,35));
         buttonB.setFocusable(false);
+        buttonB.setBackground(new Color(223, 233, 242, 255));
         buttonB.addActionListener(this);
-//        buttonB.setText("B");
 
         buttonC.setBounds(50,350,200,200);
         buttonC.setFont(new Font("Arial",Font.BOLD,35));
         buttonC.setFocusable(false);
+        buttonC.setBackground(new Color(223, 233, 242, 255));
         buttonC.addActionListener(this);
-//        buttonC.setText("C");
 
         buttonD.setBounds(300,350,200,200);
         buttonD.setFont(new Font("Arial",Font.BOLD,35));
         buttonD.setFocusable(false);
+        buttonD.setBackground(new Color(223, 233, 242, 255));
         buttonD.addActionListener(this);
-//        buttonD.setText("D");
+
 
         buttonE.setBounds(50,600,200,200);
         buttonE.setFont(new Font("Arial",Font.BOLD,35));
         buttonE.setFocusable(false);
+        buttonE.setBackground(new Color(223, 233, 242, 255));
         buttonE.addActionListener(this);
-//        buttonE.setText("E");
 
         buttonF.setBounds(300,600,200,200);
         buttonF.setFont(new Font("Arial",Font.BOLD,35));
         buttonF.setFocusable(false);
+        buttonF.setBackground(new Color(223, 233, 242, 255));
         buttonF.addActionListener(this);
-//        buttonF.setText("F");
+
 
         buttonPrev.setBounds(100,850,150,50);
         buttonPrev.setFont(new Font("Arial",Font.BOLD,35));
@@ -97,28 +99,31 @@ public class MainWindow implements ActionListener {
         frame.add((buttonNext));
         frame.setVisible(true);
 
+        Collections.shuffle(listQuestions);
         showWord();
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        Question word = listQuestions.get(numberWord);
+
         if(e.getSource()==buttonA) {
-            System.out.println("A");
+            checkAnswer(word, buttonA);
         }
         if(e.getSource()==buttonB) {
-            System.out.println("B");
+            checkAnswer(word, buttonB);
         }
         if(e.getSource()==buttonC) {
-            System.out.println(buttonC.getText());
+            checkAnswer(word, buttonC);
         }
         if(e.getSource()==buttonD) {
-            System.out.println("D");
+            checkAnswer(word, buttonD);
         }
         if(e.getSource()==buttonE) {
-            System.out.println("E");
+            checkAnswer(word, buttonE);
         }
         if(e.getSource()==buttonF) {
-            System.out.println("F");
+            checkAnswer(word, buttonF);
         }
         if(e.getSource() == buttonNext) {
             numberWord++;
@@ -135,6 +140,14 @@ public class MainWindow implements ActionListener {
             }
             showWord();
 
+        }
+    }
+
+    private void checkAnswer(Question word, JButton button) {
+        if (button.getText().equals(word.getRusWord())) {
+            button.setBackground(Color.green);
+        } else {
+            button.setBackground(Color.red);
         }
     }
 
@@ -156,6 +169,14 @@ public class MainWindow implements ActionListener {
 
         }
 
+        buttonA.setBackground(new Color(223, 233, 242, 255));
+        buttonB.setBackground(new Color(223, 233, 242, 255));
+        buttonC.setBackground(new Color(223, 233, 242, 255));
+        buttonD.setBackground(new Color(223, 233, 242, 255));
+        buttonE.setBackground(new Color(223, 233, 242, 255));
+        buttonF.setBackground(new Color(223, 233, 242, 255));
+
+        Collections.shuffle(listWords);
         buttonA.setText(listWords.get(0));
         buttonB.setText(listWords.get(1));
         buttonC.setText(listWords.get(2));
