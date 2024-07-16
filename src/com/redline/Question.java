@@ -1,3 +1,5 @@
+package com.redline;
+
 public class Question {
     private String engWord;
     private String rusWord;
