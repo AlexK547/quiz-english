@@ -1,4 +1,7 @@
-package com.redline;
+package com.redline.view;
+
+import com.redline.question.Question;
+import com.redline.database.DataQuestions;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,7 +11,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class MainWindow implements ActionListener {
+public class LearnWordsWindow implements ActionListener {
 
     private List<Question> listQuestions = new DataQuestions().getListWords();
     private int numberWord = 0;
@@ -26,7 +29,7 @@ public class MainWindow implements ActionListener {
     JButton buttonPrev = new JButton("Prev");
     JButton buttonNext = new JButton("Next");
 
-    public MainWindow() {
+    public LearnWordsWindow() {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(565,1000);
         frame.getContentPane().setBackground(new Color(222, 222, 222));

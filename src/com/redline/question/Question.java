@@ -1,4 +1,4 @@
-package com.redline;
+package com.redline.question;
 
 public class Question {
     private String engWord;

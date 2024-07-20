@@ -1,4 +1,6 @@
-package com.redline;
+package com.redline.database;
+
+import com.redline.question.Question;
 
 import java.util.ArrayList;
 import java.util.List;
