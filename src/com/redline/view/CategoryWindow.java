@@ -1,8 +1,7 @@
 package com.redline.view;
 
-import com.redline.database.DataQuestions;
+
 import com.redline.database.DbFunctions;
-import com.redline.question.Question;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,7 +19,56 @@ public class CategoryWindow implements ActionListener {
 
     List<JButton> buttons = new ArrayList<>();
 
-    public CategoryWindow(Set<String> categoriesList) {
+    AddNewWordWindow addNewWordWindow;
+    DbFunctions DB = new DbFunctions();
+
+    public CategoryWindow() throws SQLException {
+        addNewWordWindow = new AddNewWordWindow(this, this.DB);
+        addNewWordWindow.frame.setVisible(false);
+
+        reflash();
+
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        if(e.getSource()==textField) {
+            System.out.println("categories");
+        }
+
+        if(e.getSource()==button) {
+            System.out.println("button");
+            frame.setVisible(false);
+            addNewWordWindow.frame.setVisible(true);
+        }
+
+    }
+
+
+    public void addButtons(Set<String> categoriesList) {
+        Object[] categories = categoriesList.toArray();
+        int step = 80;
+
+        for (int i = 0; i < categories.length; i++) {
+            String category = (String) categories[i];
+            JButton btn = new JButton();
+
+            btn.setBounds(50,100 + i*step,450,50);
+            btn.setFont(new Font("Arial",Font.BOLD,24));
+            btn.setFocusable(false);
+            btn.setBackground(new Color(223, 233, 242, 255));
+            btn.setText((String) category);
+            btn.addActionListener(this);
+
+            buttons.add(btn);
+            frame.add(btn);
+            System.out.println(category);
+        }
+
+    }
+
+    public void reflash() throws SQLException {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(565,1000);
         frame.getContentPane().setBackground(new Color(222, 222, 222));
@@ -37,7 +85,8 @@ public class CategoryWindow implements ActionListener {
         textField.setText("Categories");
         textField.addActionListener(this);
 
-        addButtons(categoriesList);
+        addButtons(DB.getCategories());
+        System.out.println(DB.getCategories().size());
 
         button.setBounds(50,800,450,100);
         button.setFont(new Font("Arial",Font.BOLD,35));
@@ -46,49 +95,9 @@ public class CategoryWindow implements ActionListener {
         button.setText("Add new word");
         button.addActionListener(this);
 
-
-
         frame.add(textField);
         frame.add(button);
 
         frame.setVisible(true);
-
     }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-
-        if(e.getSource()==textField) {
-            System.out.println("categories");
-        }
-
-        if(e.getSource()==button) {
-            System.out.println("button");
-        }
-
-    }
-
-
-    private void addButtons(Set<String> categoriesList) {
-        Object[] categories = categoriesList.toArray();
-        int step = 150;
-
-        for (int i = 0; i < categories.length; i++) {
-            String category = (String) categories[i];
-            JButton btn = new JButton();
-
-            btn.setBounds(50,100 + i*step,450,100);
-            btn.setFont(new Font("Arial",Font.BOLD,35));
-            btn.setFocusable(false);
-            btn.setBackground(new Color(223, 233, 242, 255));
-            btn.setText((String) category);
-            btn.addActionListener(this);
-
-            buttons.add(btn);
-            frame.add(btn);
-            System.out.println(category);
-        }
-
-    }
-
 }
